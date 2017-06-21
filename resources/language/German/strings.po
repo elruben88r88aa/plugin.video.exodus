@@ -42,7 +42,7 @@ msgstr "Filme"
 
 msgctxt "#32002"
 msgid "TV Shows"
-msgstr "TV-Serien"
+msgstr "Serien"
 
 msgctxt "#32003"
 msgid "My Movies"
@@ -50,7 +50,7 @@ msgstr "Meine Filme"
 
 msgctxt "#32004"
 msgid "My TV Shows"
-msgstr "Meine TV-Serien"
+msgstr "Meine Serien"
 
 msgctxt "#32005"
 msgid "New Movies"
@@ -138,7 +138,7 @@ msgstr "Wiederkehrende Serien"
 
 msgctxt "#32026"
 msgid "New TV Shows"
-msgstr "Neue TV-Serien"
+msgstr "Neue Serien"
 
 msgctxt "#32027"
 msgid "TV Calendar"
@@ -194,7 +194,7 @@ msgstr "Film Liste"
 
 msgctxt "#32040"
 msgid "TV Show Lists"
-msgstr "TV-Serien Liste"
+msgstr "Serien Liste"
 
 msgctxt "#32041"
 msgid "Episode Lists"
@@ -319,7 +319,7 @@ msgstr "Trakt Manager"
 
 msgctxt "#32071"
 msgid "Browse Series"
-msgstr "Durchsuche TV-Serien"
+msgstr "Durchsuche Serien"
 
 msgctxt "#32072"
 msgid "Refresh"
@@ -531,7 +531,7 @@ msgstr "Filme"
 
 msgctxt "#32350"
 msgid "TV"
-msgstr "TV-Serien"
+msgstr "Serien"
 
 msgctxt "#32351"
 msgid "Downloading features are disabled by default."
@@ -721,11 +721,11 @@ msgstr "Filme"
 
 msgctxt "#32544"
 msgid "TV"
-msgstr "TV-Serien"
+msgstr "Serien"
 
 msgctxt "#32545"
 msgid "Auto update TV Shows"
-msgstr "TV-Serien automatisch aktualisieren"
+msgstr "Serien automatisch aktualisieren"
 
 msgctxt "#32546"
 msgid "Show notifications during update"
@@ -757,7 +757,7 @@ msgstr "Hinzufügen zur Bibliothek..."
 
 msgctxt "#32553"
 msgid "Updating TV shows..."
-msgstr "Aktualisiere TV-Serien..."
+msgstr "Aktualisiere Serien..."
 
 msgctxt "#32554"
 msgid "Process Complete"
@@ -785,7 +785,7 @@ msgstr "[B]EXODUS[/B] : Film-Ordner..."
 
 msgctxt "#32560"
 msgid "[B]EXODUS[/B] : TV folder..."
-msgstr "[B]EXODUS[/B] : TV-Serien-Ordner..."
+msgstr "[B]EXODUS[/B] : Serien-Ordner..."
 
 msgctxt "#32561"
 msgid "[B]TRAKT[/B] : Import Collection..."
