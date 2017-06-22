@@ -18,7 +18,7 @@
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Content-Anbietern.</disclaimer>
 		<platform>all</platform>
 		<forum>http://xstream-addon.square7.ch/forumdisplay.php?fid=11</forum>
-	        <source>https://github.com/lastship/plugin.video.exodus/</source>
+	        <source>https://github.com/lastship/plugin.video.exodus</source>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
