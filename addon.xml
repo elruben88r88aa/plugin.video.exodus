@@ -14,7 +14,7 @@
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">Exodus</summary>
-		<description lang="de">Bitte besuche [COLOR blue]http://xstream-addon.square7.ch/showthread.php?tid=1090[/COLOR] für Unterstützung und Fragen zu Exodus!Exodus FAQ bitte hier lesen [COLOR blue]http://xstream-addon.square7.ch/showthread.php?tid=923[/COLOR] Beachte dabei, dass Exodus nicht offizieller Teil des Media Players ist den du gerade verwendest und daher nicht von dem offiziellen Support-Kanäle abgedeckt wird, dieses Addon hat nichts zu tun mit dem Media-Player selbst, noch ist es dafür beabsichtigt, es handelt sich hierbei lediglich um ein Drittanbieter-Anwendung die dem System hinzugefügt wurde.</description>
+		<description lang="de">>Wir suchen Entwickler. Bitte besuche [COLOR blue]http://xstream-addon.square7.ch/showthread.php?tid=1094[/COLOR] für Unterstützung und Fragen zu Exodus! Exodus FAQ bitte lesen.  Beachte dabei, dass Exodus nicht offizieller Teil des Media Players ist den du gerade verwendest und daher nicht von dem offiziellen Support-Kanäle abgedeckt wird, dieses Addon hat nichts zu tun mit dem Media-Player selbst, noch ist es dafür beabsichtigt, es handelt sich hierbei lediglich um ein Drittanbieter-Anwendung die dem System hinzugefügt wurde.</description>
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Content-Anbietern.</disclaimer>
 		<platform>all</platform>
 		<forum>http://xstream-addon.square7.ch/forumdisplay.php?fid=11</forum>
