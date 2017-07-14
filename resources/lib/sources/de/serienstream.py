@@ -75,17 +75,17 @@ class source:
 
             r = dom_parser.parse_dom(r, 'div', attrs={'class': 'hosterSiteVideo'})
             r = dom_parser.parse_dom(r, 'li', attrs={'data-lang-key': re.compile('[1|3]')})
-            r = [(dom_parser.parse_dom(i, 'a', req='href'), dom_parser.parse_dom(i, 'h4')) for i in r]
-            r = [(i[0][0].attrs['href'], i[1][0].content.lower()) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
-            r = [(i[0], i[1], re.findall('(.+?)\s*<br\s*/?>(.+?)$', i[1], re.DOTALL)) for i in r]
-            r = [(i[0], i[2][0][0] if len(i[2]) > 0 else i[1], i[2][0][1] if len(i[2]) > 0 else '') for i in r]
-            r = [(i[0], i[1], 'HD' if 'hosterhdvideo' in i[2] else 'SD') for i in r]
+            r = [(dom_parser.parse_dom(i, 'a', req='href'), dom_parser.parse_dom(i, 'h4'), 'subbed' if i.attrs['data-lang-key'] == '3' else '') for i in r]
+            r = [(i[0][0].attrs['href'], i[1][0].content.lower(), i[2]) for i in r if len(i[0]) > 0 and len(i[1]) > 0]
+            r = [(i[0], i[1], re.findall('(.+?)\s*<br\s*/?>(.+?)$', i[1], re.DOTALL), i[2]) for i in r]
+            r = [(i[0], i[2][0][0] if len(i[2]) > 0 else i[1], i[2][0][1] if len(i[2]) > 0 else '', i[3]) for i in r]
+            r = [(i[0], i[1], 'HD' if 'hosterhdvideo' in i[2] else 'SD', i[3]) for i in r]
 
-            for link, host, quality in r:
+            for link, host, quality, info in r:
                 valid, host = source_utils.is_host_valid(host, hostDict)
                 if not valid: continue
 
-                sources.append({'source': host, 'quality': quality, 'language': 'de', 'url': link, 'direct': False, 'debridonly': False})
+                sources.append({'source': host, 'quality': quality, 'language': 'de', 'url': link, 'info': info, 'direct': False, 'debridonly': False})
 
             return sources
         except:
@@ -106,7 +106,7 @@ class source:
 
     def __search(self, titles, year):
         try:
-            r = urllib.urlencode({'keyword': titles[0]})
+            r = urllib.urlencode({'keyword': cleantitle.query(titles[0])})
             r = client.request(urlparse.urljoin(self.base_link, self.search_link), XHR=True, post=r)
 
             t = [cleantitle.get(i) for i in set(titles) if i]
@@ -124,3 +124,4 @@ class source:
             return source_utils.strip_domain(r)
         except:
             return
+
