@@ -89,13 +89,17 @@ class source:
 
             url = urlparse.urljoin(self.base_link, url)
 
-            r = client.request(url)
+            r = client.request(url, output='extended')
+
+            headers = r[3]
+            headers.update({'Cookie': r[2].get('Set-Cookie'), 'Referer': self.base_link})
+            r = r[0]
 
             rels = dom_parser.parse_dom(r, 'nav', attrs={'class': 'player'})
             rels = dom_parser.parse_dom(rels, 'ul', attrs={'class': 'idTabs'})
             rels = dom_parser.parse_dom(rels, 'li')
             rels = [(dom_parser.parse_dom(i, 'a', attrs={'class': 'options'}, req='href'), dom_parser.parse_dom(i, 'img', req='src')) for i in rels]
-            rels = [(i[0][0].attrs['href'][1:], re.findall('\/flags\/(\w+)\.png$', i[1][0].attrs['src'])) for i in rels if i[0] and i[1]]
+            rels = [(i[0][0].attrs['href'][1:], re.findall('/flags/(\w+)\.png$', i[1][0].attrs['src'])) for i in rels if i[0] and i[1]]
             rels = [i[0] for i in rels if len(i[1]) > 0 and i[1][0].lower() == 'de']
 
             r = [dom_parser.parse_dom(r, 'div', attrs={'id': i}) for i in rels]
@@ -109,35 +113,38 @@ class source:
                     i = re.sub('\[.+?\]|\[/.+?\]', '', i)
                     i = client.replaceHTMLCodes(i)
 
+                    if '/play/' in i: i = urlparse.urljoin(self.base_link, i)
+
                     if self.domains[0] in i:
-                        i = client.request(i, referer=url)
+                        i = client.request(i, headers=headers, referer=url)
 
                         for x in re.findall('''\(["']?(.*)["']?\)''', i):
-                            try: i += jsunpack.unpack(base64.decodestring(re.sub('"\s*\+\s*"', '', x)))
+                            try: i += jsunpack.unpack(base64.decodestring(re.sub('"\s*\+\s*"', '', x))).replace('\\', '')
                             except: pass
 
-                        s = re.compile('(eval\(function.*?)</script>', re.DOTALL).findall(i)
-
-                        for x in s:
-                            try: i += jsunpack.unpack(x)
+                        for x in re.findall('(eval\s*\(function.*?)</script>', i, re.DOTALL):
+                            try: i += jsunpack.unpack(x).replace('\\', '')
                             except: pass
 
-                        i = [(match[0], match[1]) for match in re.findall('''['"]?file['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', i, re.DOTALL)]
-                        i = [(x[0].replace('\/', '/'), source_utils.label_to_quality(x[1])) for x in i if '/no-video.mp4' not in x[0]]
+                        links = [(match[0], match[1]) for match in re.findall('''['"]?file['"]?\s*:\s*['"]([^'"]+)['"][^}]*['"]?label['"]?\s*:\s*['"]([^'"]*)''', i, re.DOTALL)]
+                        links = [(x[0].replace('\/', '/'), source_utils.label_to_quality(x[1])) for x in links if '/no-video.mp4' not in x[0]]
 
-                        for url, quality in i:
+                        doc_links = [directstream.google('https://drive.google.com/file/d/%s/view' % match) for match in re.findall('''file:\s*["'](?:[^"']+youtu.be/([^"']+))''', i, re.DOTALL)]
+                        doc_links = [(u['url'], u['quality']) for x in doc_links if x for u in x]
+                        links += doc_links
+
+                        for url, quality in links:
                             sources.append({'source': 'gvideo', 'quality': quality, 'language': 'de', 'url': url, 'direct': True, 'debridonly': False})
                     else:
                         try:
+                            # as long as URLResolver get no Update for this URL (So just a Temp-Solution)
+                            did = re.findall('youtube.googleapis.com.*?docid=(\w+)', i)
+                            if did: i = 'https://drive.google.com/file/d/%s/view' % did[0]
+
                             valid, host = source_utils.is_host_valid(i, hostDict)
                             if not valid: continue
 
-                            urls = []
-                            if 'google' in i: host = 'gvideo'; direct = True; urls = directstream.google(i);
-                            if 'google' in i and not urls and directstream.googletag(i):  host = 'gvideo'; direct = True; urls = [{'quality': directstream.googletag(i)[0]['quality'], 'url': i}]
-                            elif 'ok.ru' in i: host = 'vk'; direct = True; urls = directstream.odnoklassniki(i)
-                            elif 'vk.com' in i: host = 'vk'; direct = True; urls = directstream.vk(i)
-                            else: direct = False; urls = [{'quality': 'SD', 'url': i}]
+                            urls, host, direct = source_utils.check_directstreams(i, host)
 
                             for x in urls: sources.append({'source': host, 'quality': x['quality'], 'language': 'de', 'url': x['url'], 'direct': direct, 'debridonly': False})
                         except:
@@ -177,3 +184,4 @@ class source:
         try: n = re.findall('nonce"?\s*:\s*"?([0-9a-zA-Z]+)', n)[0]
         except: n = '5d12d0fa54'
         return n
+
