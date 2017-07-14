@@ -126,7 +126,7 @@ class source:
 
     def __search(self, titles, year, season='0'):
         try:
-            query = self.search_link % (urllib.quote_plus(titles[0]))
+            query = self.search_link % (urllib.quote_plus(cleantitle.query(titles[0])))
             query = urlparse.urljoin(self.base_link, query)
 
             t = [cleantitle.get(i) for i in set(titles) if i]
