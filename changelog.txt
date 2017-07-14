@@ -1,3 +1,11 @@
+[B]3.1.22[/B]
+- Update German Providers
+- Update Modules
+- Update Indexers
+
+[B]3.1.21[/B]
+- Fix tata
+
 [B]3.1.20[/B]
 - Anpassung an das Github Repo, keine Technischen Änderungen
 
