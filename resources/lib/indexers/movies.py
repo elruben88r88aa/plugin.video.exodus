@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-    Exodus Add-on
+    Exodus-Covenant Add-on
     Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ class movies:
         self.search_link = 'http://api.trakt.tv/search/movie?limit=20&page=1&query='
         self.fanart_tv_art_link = 'http://webservice.fanart.tv/v3/movies/%s'
         self.fanart_tv_level_link = 'http://webservice.fanart.tv/v3/level'
-        self.tm_art_link = 'http://api.themoviedb.org/3/movie/%s/images?api_key=' + self.tm_user
+        self.tm_art_link = 'http://api.themoviedb.org/3/movie/%s/images?api_key=%s&language=en-US&include_image_language=en,%s,null' % ('%s', self.tm_user, self.lang)
         self.tm_img_link = 'https://image.tmdb.org/t/p/w%s%s'
 
         self.persons_link = 'http://www.imdb.com/search/name?count=100&name='
@@ -639,7 +639,7 @@ class movies:
         self.meta = []
         total = len(self.list)
 
-        self.fanart_tv_headers = {'api-key': 'YTc2MGMyMTEzYTM1OTk5NzFiN2FjMWU0OWUzMTAyMGQ='.decode('base64')}
+        self.fanart_tv_headers = {'api-key': 'NTg2MTE4YmUxYWM2NzNmNzQ5NjNjYzI4NGQ0NmJkOGU='.decode('base64')}
         if not self.fanart_tv_user == '':
             self.fanart_tv_headers.update({'client-key': self.fanart_tv_user})
 
@@ -787,7 +787,7 @@ class movies:
 
             try:
                 poster3 = art2['posters']
-                poster3 = [x for x in poster3 if x.get('iso_639_1') == 'en'] + [x for x in poster3 if not x.get('iso_639_1') == 'en']
+                poster3 = [x for x in poster3 if x.get('iso_639_1') == self.lang] + [x for x in poster3 if x.get('iso_639_1') == 'en'] + [x for x in poster3 if x.get('iso_639_1') not in [self.lang, 'en']]
                 poster3 = [(x['width'], x['file_path']) for x in poster3]
                 poster3 = [(x[0], x[1]) if x[0] < 300 else ('300', x[1]) for x in poster3]
                 poster3 = self.tm_img_link % poster3[0]
@@ -797,7 +797,7 @@ class movies:
 
             try:
                 fanart2 = art2['backdrops']
-                fanart2 = [x for x in fanart2 if x.get('iso_639_1') == 'en'] + [x for x in fanart2 if not x.get('iso_639_1') == 'en']
+                fanart2 = [x for x in fanart2 if x.get('iso_639_1') == self.lang] + [x for x in fanart2 if x.get('iso_639_1') == 'en'] + [x for x in fanart2 if x.get('iso_639_1') not in [self.lang, 'en']]
                 fanart2 = [x for x in fanart2 if x.get('width') == 1920] + [x for x in fanart2 if x.get('width') < 1920]
                 fanart2 = [(x['width'], x['file_path']) for x in fanart2]
                 fanart2 = [(x[0], x[1]) if x[0] < 1280 else ('1280', x[1]) for x in fanart2]
@@ -1016,3 +1016,4 @@ class movies:
 
         control.content(syshandle, 'addons')
         control.directory(syshandle, cacheToDisc=True)
+
