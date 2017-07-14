@@ -105,6 +105,7 @@ class source:
 
             for link in links:
                 if '/englisch/' in link: continue
+                control.sleep(3000)
                 if link != url: r = client.request(urlparse.urljoin(self.base_link, link))
 
                 quality = 'SD'
