@@ -64,7 +64,7 @@ class source:
             r = re.compile('<div id="stream-h">.*?</li>.*?</div>\s*</div>', re.IGNORECASE | re.DOTALL).findall(r)
             r = [(dom_parser.parse_dom(i, 'div', attrs={'id': 'mirror-head'}), dom_parser.parse_dom(i, 'div', attrs={'id': 'stream-links'})) for i in r]
             r = [(i[0][0].content, i[1]) for i in r if i[0]]
-            r = [(re.findall('.+\s[\||-]\s(.*)', i[0]), i[1]) for i in r]
+            r = [(re.findall('.+\s[|-]\s(.*)', i[0]), i[1]) for i in r]
             r = [(i[0][0].strip(), i[1]) for i in r if len(i[0]) > 0]
 
             for name, links in r:
