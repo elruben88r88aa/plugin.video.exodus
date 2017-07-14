@@ -74,7 +74,7 @@ class source:
             t = [cleantitle.get(i) for i in set(titles) if i]
             y = ['%s' % str(year), '%s' % str(int(year) + 1), '%s' % str(int(year) - 1), '0']
 
-            r = client.request(urlparse.urljoin(self.base_link, self.search_link), post={'query': titles[0]})
+            r = client.request(urlparse.urljoin(self.base_link, self.search_link), post={'query': cleantitle.query(titles[0])})
 
             r = dom_parser.parse_dom(r, 'li', attrs={'class': 'entTd'})
             r = dom_parser.parse_dom(r, 'div', attrs={'class': 've-screen'}, req='title')
