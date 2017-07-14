@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-'''
-    Exodus Add-on
+"""
+    Exodus-Covenant Add-on
     Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,23 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 
-import re,urllib,urlparse,random
+import random
+import re
+import urllib
+import urlparse
+
 from resources.lib.modules import client
+from resources.lib.modules import utils
 
 
-def request(url, check, close=True, redirect=True, error=False, proxy=None, post=None, headers=None, mobile=False, XHR=False, limit=None, referer=None, cookie=None, timeout='30'):
+def request(url, check, close=True, redirect=True, error=False, proxy=None, post=None, headers=None, mobile=False, XHR=False, limit=None, referer=None, cookie=None, compression=True, output='', timeout='30'):
     try:
-
-        r = client.request(url, close=close, redirect=redirect, proxy=proxy, post=post, headers=headers, mobile=mobile, XHR=XHR, limit=limit, referer=referer, cookie=cookie, timeout=timeout)
-        if r == None and error == False: return r
+        r = client.request(url, close=close, redirect=redirect, proxy=proxy, post=post, headers=headers, mobile=mobile, XHR=XHR, limit=limit, referer=referer, cookie=cookie, compression=compression, output=output, timeout=timeout)
+        if r is not None and error is not False: return r
         if check in str(r) or str(r) == '': return r
-
 
         proxies = sorted(get(), key=lambda x: random.random())
         proxies = sorted(proxies, key=lambda x: random.random())
@@ -37,10 +40,13 @@ def request(url, check, close=True, redirect=True, error=False, proxy=None, post
 
         for p in proxies:
             p += urllib.quote_plus(url)
-            if not post == None: p += urllib.quote_plus('?%s' % post)
-            r = client.request(p, close=close, redirect=redirect, proxy=proxy, headers=headers, mobile=mobile, XHR=XHR, limit=limit, referer=referer, cookie=cookie, timeout='20')
+            if post is not None:
+                if isinstance(post, dict):
+                    post = utils.byteify(post)
+                    post = urllib.urlencode(post)
+                p += urllib.quote_plus('?%s' % post)
+            r = client.request(p, close=close, redirect=redirect, proxy=proxy, headers=headers, mobile=mobile, XHR=XHR, limit=limit, referer=referer, cookie=cookie, compression=compression, output=output, timeout='20')
             if check in str(r) or str(r) == '': return r
-
     except:
         pass
 
@@ -48,7 +54,7 @@ def request(url, check, close=True, redirect=True, error=False, proxy=None, post
 def geturl(url):
     try:
         r = client.request(url, output='geturl')
-        if r == None: return r
+        if r is None: return r
 
         host1 = re.findall('([\w]+)[.][\w]+$', urlparse.urlparse(url.strip().lower()).netloc)[0]
         host2 = re.findall('([\w]+)[.][\w]+$', urlparse.urlparse(r.strip().lower()).netloc)[0]
@@ -61,8 +67,7 @@ def geturl(url):
         for p in proxies:
             p += urllib.quote_plus(url)
             r = client.request(p, output='geturl')
-            if not r == None: return parse(r)
-
+            if r is not None: return parse(r)
     except:
         pass
 
@@ -121,5 +126,7 @@ def get():
     'http://www.navigate-online.xyz/browse.php?b=20&u='
 
     ]
+
+
 
 
