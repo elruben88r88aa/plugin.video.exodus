@@ -118,10 +118,7 @@ class source:
                         elif i in ['2160p']: quali = '4K'
                         else: quali = 'SD'
 
-                        if 'google' in url: host = 'gvideo'; direct = True; urls = directstream.google(url)
-                        elif 'ok.ru' in url: host = 'vk'; direct = True; urls = directstream.odnoklassniki(url)
-                        elif 'vk.com' in url: host = 'vk'; direct = True; urls = directstream.vk(url)
-                        else: direct = False; urls = [{'quality': quali, 'url': url}]
+                        urls, host, direct = source_utils.check_directstreams(url, host, quali)
 
                         for i in urls: sources.append({'source': host, 'quality': i['quality'], 'language': 'de', 'url': i['url'], 'direct': direct, 'debridonly': False})
                     except:
@@ -137,7 +134,7 @@ class source:
 
     def __search(self, titles, year):
         try:
-            query = self.search_link % (urllib.quote_plus(titles[0]))
+            query = self.search_link % urllib.quote_plus(cleantitle.query(titles[0]))
             query = urlparse.urljoin(self.base_link, query)
 
             t = [cleantitle.get(i) for i in set(titles) if i]
