@@ -122,7 +122,7 @@ class source:
 
     def __search(self, titles):
         try:
-            query = self.search_link % (urllib.quote_plus(cleantitle.query(titles[0])))
+            query = self.search_link % (urllib.quote_plus(titles[0]))
             query = urlparse.urljoin(self.base_link, query)
 
             t = [cleantitle.get(i) for i in set(titles) if i]
@@ -137,3 +137,4 @@ class source:
             return source_utils.strip_domain(r)
         except:
             return
+
