@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Exodus Add-on
+    Exodus-Covenant Add-on
     Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import hashlib
 import re
 
 from resources.lib.modules import client
+from resources.lib.modules import directstream
 from resources.lib.modules import trakt
 from resources.lib.modules import pyaes
 
@@ -130,7 +131,31 @@ def aliases_to_array(aliases, filter=None):
 
 
 def append_headers(headers):
-        return '|%s' % '&'.join(['%s=%s' % (key, urllib.quote_plus(headers[key])) for key in headers])
+    return '|%s' % '&'.join(['%s=%s' % (key, urllib.quote_plus(headers[key])) for key in headers])
+
+
+def check_directstreams(url, hoster='', quality='SD'):
+    urls = []
+    host = hoster
+
+    if 'google' in url or any(x in url for x in ['youtube.', 'docid=']):
+        urls = directstream.google(url)
+        if not urls:
+            tag = directstream.googletag(url)
+            if tag: urls = [{'quality': tag[0]['quality'], 'url': url}]
+        if urls: host = 'gvideo'
+    elif 'ok.ru' in url:
+        urls = directstream.odnoklassniki(url)
+        if urls: host = 'vk'
+    elif 'vk.com' in url:
+        urls = directstream.vk(url)
+        if urls: host = 'vk'
+
+    direct = True if urls else False
+
+    if not urls: urls = [{'quality': quality, 'url': url}]
+
+    return urls, host, direct
 
 
 # if salt is provided, it should be string
