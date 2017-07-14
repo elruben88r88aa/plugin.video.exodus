@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    Exodus-Covenant Add-on
+   Covenant Add-on
     Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
