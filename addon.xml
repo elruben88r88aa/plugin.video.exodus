@@ -26,8 +26,6 @@
 			<screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
 			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
 		</assets>
-		<news>- Update German Providers
-- Update Modules
-- Update Indexers</news>
+		<news>- Add German Providers (proxer, streamdream, view4u)</news>
 	</extension>
 </addon>
