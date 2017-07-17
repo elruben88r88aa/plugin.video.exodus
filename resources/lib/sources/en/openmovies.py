@@ -29,7 +29,7 @@ class source:
     def __init__(self):
         self.priority = 1
         self.language = ['en']
-        self.domains = ['openloadmovies.net', 'openloadmovies.tv', 'openloadmovies.org', 'openloadmovies.co']
+        self.domains = ['openloadstream.net', 'openloadmovies.tv', 'openloadmovies.org', 'openloadmovies.co']
         self.base_link = 'http://openloadmovies.org'
         self.search_link = '/?s=%s'
 
