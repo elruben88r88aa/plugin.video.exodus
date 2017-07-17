@@ -2,7 +2,6 @@
 
 '''
     Exodus Add-on
-    Copyright (C) 2016 Exodus
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +31,7 @@ class source:
         self.priority = 1
         self.language = ['en']
         self.domains = ['putlocker.systems', 'putlocker-movies.tv', 'putlocker.yt', 'cartoonhd.website', 'cartoonhd.online', 'cartoonhd.cc']
-        self.base_link = 'https://cartoonhd.cc/'
+        self.base_link = 'https://cartoonhd.be/'
 
     def movie(self, imdb, title, localtitle, aliases, year):
         try:
@@ -77,12 +76,12 @@ class source:
     def searchMovie(self, title, year, aliases, headers):
         try:
             for alias in aliases:
-                url = '%s/movie/%s' % (self.base_link, cleantitle.geturl(alias['title']))
+                url = '%s/full-movie/%s' % (self.base_link, cleantitle.geturl(alias['title']))
                 url = client.request(url, headers=headers, output='geturl', timeout='10')
                 if not url == None and url != self.base_link: break
             if url == None:
                 for alias in aliases:
-                    url = '%s/movie/%s-%s' % (self.base_link, cleantitle.geturl(alias['title']), year)
+                    url = '%s/full-movie/%s-%s' % (self.base_link, cleantitle.geturl(alias['title']), year)
                     url = client.request(url, headers=headers, output='geturl', timeout='10')
                     if not url == None and url != self.base_link: break
 
@@ -169,5 +168,7 @@ class source:
 
     def resolve(self, url):
         return directstream.googlepass(url)
+
+
 
 
