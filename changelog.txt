@@ -1,3 +1,6 @@
+[B]3.1.24[/B]
+- Update English Providers
+
 [B]3.1.23[/B]
 - Add German Providers (proxer, streamdream, view4u)
 
