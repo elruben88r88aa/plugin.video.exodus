@@ -1,3 +1,7 @@
+[B]3.1.25[/B]
+- Remove unfunctional english providers; add new ones (Thx petemei)
+- Update german translation
+
 [B]3.1.24[/B]
 - Update English Providers
 
