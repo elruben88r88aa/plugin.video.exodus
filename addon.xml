@@ -27,6 +27,7 @@
 			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
 		</assets>
 		<news>- Remove unfunctional english providers; add new ones (Thx petemei)
-- Update german translation</news>
+- Update german translation
+- Remove all non-DE/EN-sources</news>
 	</extension>
 </addon>
