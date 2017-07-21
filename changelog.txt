@@ -2,6 +2,7 @@
 - Remove unfunctional english providers; add new ones (Thx petemei)
 - Update german translation
 - Remove all non-DE/EN-sources 
+- Lift German Providers to Top in Settings 
 
 [B]3.1.24[/B]
 - Update English Providers
